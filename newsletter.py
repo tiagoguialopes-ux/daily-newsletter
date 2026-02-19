@@ -208,11 +208,17 @@ def build_html_email(articles: list, date_str: str) -> str:
 # ─────────────────────────────────────────────
 
 def send_email(gmail_address: str, gmail_app_password: str, recipients: list, subject: str, html_body: str):
+    # Strip any accidental whitespace
+    gmail_address    = gmail_address.strip()
+    gmail_app_password = gmail_app_password.strip().replace(" ", "")
+
+    print(f"  Connecting as: '{gmail_address}'")
+    print(f"  Password length: {len(gmail_app_password)} chars")
+
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"]    = f"Telecom Newsletter <{gmail_address}>"
     msg["To"]      = ", ".join(recipients)
-
     msg.attach(MIMEText(html_body, "html"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
