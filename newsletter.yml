@@ -2,11 +2,10 @@ name: Daily Telecom Newsletter
 
 on:
   schedule:
-    # Runs at 07:00 UTC every weekday (Monday–Friday)
-    # 07:00 UTC = 08:00 Lisbon winter / 08:00 Lisbon summer
+    # 07:00 UTC = 08:00 Lisbon time, every weekday
     - cron: '0 7 * * 1-5'
 
-  # Trigger manually from the GitHub Actions tab anytime
+  # Run manually anytime from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -31,8 +30,6 @@ jobs:
           SHEET_URL_FEEDS:      ${{ secrets.SHEET_URL_FEEDS }}
           SHEET_URL_KEYWORDS:   ${{ secrets.SHEET_URL_KEYWORDS }}
           SHEET_URL_RECIPIENTS: ${{ secrets.SHEET_URL_RECIPIENTS }}
-          MS_TENANT_ID:         ${{ secrets.MS_TENANT_ID }}
-          MS_CLIENT_ID:         ${{ secrets.MS_CLIENT_ID }}
-          MS_CLIENT_SECRET:     ${{ secrets.MS_CLIENT_SECRET }}
-          MS_USER_EMAIL:        ${{ secrets.MS_USER_EMAIL }}
+          GMAIL_ADDRESS:        ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD:   ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python newsletter.py
