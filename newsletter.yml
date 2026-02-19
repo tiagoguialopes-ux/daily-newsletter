@@ -1,0 +1,38 @@
+name: Daily Telecom Newsletter
+
+on:
+  schedule:
+    # Runs at 07:00 UTC every weekday (Monday–Friday)
+    # 07:00 UTC = 08:00 Lisbon winter / 08:00 Lisbon summer
+    - cron: '0 7 * * 1-5'
+
+  # Trigger manually from the GitHub Actions tab anytime
+  workflow_dispatch:
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run newsletter script
+        env:
+          CLAUDE_API_KEY:       ${{ secrets.CLAUDE_API_KEY }}
+          SHEET_URL_FEEDS:      ${{ secrets.SHEET_URL_FEEDS }}
+          SHEET_URL_KEYWORDS:   ${{ secrets.SHEET_URL_KEYWORDS }}
+          SHEET_URL_RECIPIENTS: ${{ secrets.SHEET_URL_RECIPIENTS }}
+          MS_TENANT_ID:         ${{ secrets.MS_TENANT_ID }}
+          MS_CLIENT_ID:         ${{ secrets.MS_CLIENT_ID }}
+          MS_CLIENT_SECRET:     ${{ secrets.MS_CLIENT_SECRET }}
+          MS_USER_EMAIL:        ${{ secrets.MS_USER_EMAIL }}
+        run: python newsletter.py
