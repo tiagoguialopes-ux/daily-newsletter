@@ -1,8 +1,8 @@
 """
 Daily Telecom Newsletter Generator
 ===================================
-Reads config from Google Sheets, fetches RSS feeds, filters by keywords,
-summarises with Claude API, and sends email directly via Gmail SMTP.
+Reads config from Google Sheets, fetches RSS feeds AND scrapes websites,
+filters by keywords, summarises with Claude API, sends via Gmail SMTP.
 """
 
 import os
@@ -12,15 +12,17 @@ import requests
 import feedparser
 import anthropic
 import smtplib
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from urllib.parse import urljoin, urlparse
 
 
 # ─────────────────────────────────────────────
 # 1. LOAD CONFIG FROM GOOGLE SHEET
 # ─────────────────────────────────────────────
 
-def load_config_from_sheet(sheet_csv_url: dict) -> dict:
+def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
     import csv, io
 
     def fetch_tab(url):
@@ -29,22 +31,26 @@ def load_config_from_sheet(sheet_csv_url: dict) -> dict:
         reader = csv.DictReader(io.StringIO(r.text))
         return list(reader)
 
-    feeds_rows      = fetch_tab(sheet_csv_url["feeds"])
-    keywords_rows   = fetch_tab(sheet_csv_url["keywords"])
-    recipients_rows = fetch_tab(sheet_csv_url["recipients"])
+    feeds_rows      = fetch_tab(sheet_csv_urls["feeds"])
+    keywords_rows   = fetch_tab(sheet_csv_urls["keywords"])
+    recipients_rows = fetch_tab(sheet_csv_urls["recipients"])
+    scrape_rows     = fetch_tab(sheet_csv_urls["scrape"])
 
     feeds      = [r["url"]     for r in feeds_rows      if r.get("active","").lower() == "yes" and r.get("url")]
     keywords   = [r["keyword"] for r in keywords_rows   if r.get("active","").lower() == "yes" and r.get("keyword")]
     recipients = [r["email"]   for r in recipients_rows if r.get("active","").lower() == "yes" and r.get("email")]
+    scrape     = [(r["name"], r["url"], r.get("selector","a"))
+                  for r in scrape_rows
+                  if r.get("active","").lower() == "yes" and r.get("url")]
 
-    return {"feeds": feeds, "keywords": keywords, "recipients": recipients}
+    return {"feeds": feeds, "keywords": keywords, "recipients": recipients, "scrape": scrape}
 
 
 # ─────────────────────────────────────────────
 # 2. FETCH & FILTER RSS FEEDS
 # ─────────────────────────────────────────────
 
-def fetch_articles(feed_urls: list, keywords: list, max_age_days: int = 1) -> list:
+def fetch_rss_articles(feed_urls: list, keywords: list, max_age_days: int = 1) -> list:
     cutoff = datetime.datetime.utcnow() - datetime.timedelta(days=max_age_days)
     articles = []
 
@@ -78,16 +84,155 @@ def fetch_articles(feed_urls: list, keywords: list, max_age_days: int = 1) -> li
                         "link":             link,
                         "published":        published.strftime("%Y-%m-%d") if published else "unknown",
                         "matched_keywords": matched_keywords,
+                        "type":             "rss",
                     })
 
         except Exception as e:
-            print(f"[WARN] Failed to fetch {url}: {e}")
+            print(f"[WARN] RSS failed for {url}: {e}")
 
     return articles
 
 
 # ─────────────────────────────────────────────
-# 3. SUMMARISE WITH CLAUDE API
+# 3. SCRAPE WEBSITES
+# ─────────────────────────────────────────────
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+def get_article_links(source_name: str, index_url: str, selector: str) -> list:
+    try:
+        from bs4 import BeautifulSoup
+        r = requests.get(index_url, headers=HEADERS, timeout=20)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        base_domain = f"{urlparse(index_url).scheme}://{urlparse(index_url).netloc}"
+        links = []
+
+        for sel in selector.split(","):
+            sel = sel.strip()
+            for tag in soup.select(sel):
+                href = tag.get("href", "")
+                if not href or href.startswith("#") or href.startswith("javascript"):
+                    continue
+                full_url = urljoin(base_domain, href)
+                if urlparse(full_url).netloc == urlparse(index_url).netloc:
+                    links.append((tag.get_text(strip=True), full_url))
+
+        seen = set()
+        unique = []
+        for title, url in links:
+            if url not in seen and len(title) > 5:
+                seen.add(url)
+                unique.append((title, url))
+
+        print(f"  [{source_name}] Found {len(unique)} links")
+        return unique[:30]
+
+    except Exception as e:
+        print(f"[WARN] Failed to get links from {index_url}: {e}")
+        return []
+
+
+def scrape_article(url: str) -> str:
+    try:
+        from bs4 import BeautifulSoup
+        r = requests.get(url, headers=HEADERS, timeout=20)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        for tag in soup(["nav", "header", "footer", "script", "style", "aside", "form"]):
+            tag.decompose()
+
+        for selector in ["article", "main", ".content", ".article-body", ".entry-content", ".post-content", "#content"]:
+            container = soup.select_one(selector)
+            if container:
+                text = container.get_text(separator=" ", strip=True)
+                if len(text) > 200:
+                    return text[:2000]
+
+        paragraphs = soup.find_all("p")
+        text = " ".join(p.get_text(strip=True) for p in paragraphs)
+        return text[:2000]
+
+    except Exception as e:
+        return ""
+
+
+def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
+    try:
+        from bs4 import BeautifulSoup
+    except ImportError:
+        print("[WARN] beautifulsoup4 not installed, skipping scraping")
+        return []
+
+    articles = []
+    seen_urls = set()
+
+    for source_name, index_url, selector in scrape_config:
+        print(f"  Scraping {source_name}...")
+        links = get_article_links(source_name, index_url, selector)
+
+        for link_title, article_url in links:
+            if article_url in seen_urls:
+                continue
+            seen_urls.add(article_url)
+
+            title_lower = link_title.lower()
+            quick_match = [kw for kw in keywords if kw.lower() in title_lower]
+
+            text = scrape_article(article_url)
+            if not text and not quick_match:
+                continue
+
+            full_text = (link_title + " " + text).lower()
+            matched_keywords = [kw for kw in keywords if kw.lower() in full_text]
+
+            if matched_keywords:
+                articles.append({
+                    "source":           source_name,
+                    "original_title":   link_title or article_url,
+                    "original_summary": text[:1000],
+                    "link":             article_url,
+                    "published":        "unknown",
+                    "matched_keywords": matched_keywords,
+                    "type":             "scraped",
+                })
+
+            time.sleep(0.5)
+
+    print(f"  Scraping complete — {len(articles)} matching articles found")
+    return articles
+
+
+# ─────────────────────────────────────────────
+# 4. DEDUPLICATE
+# ─────────────────────────────────────────────
+
+def deduplicate(articles: list) -> list:
+    seen_urls   = set()
+    seen_titles = set()
+    unique = []
+
+    for art in articles:
+        url       = art["link"]
+        title_key = art["original_title"].lower().strip()[:60]
+
+        if url in seen_urls or title_key in seen_titles:
+            continue
+
+        seen_urls.add(url)
+        seen_titles.add(title_key)
+        unique.append(art)
+
+    return unique
+
+
+# ─────────────────────────────────────────────
+# 5. SUMMARISE WITH CLAUDE API
 # ─────────────────────────────────────────────
 
 def summarise_articles(articles: list, api_key: str) -> list:
@@ -153,7 +298,7 @@ Return ONLY the JSON array, no other text.
 
 
 # ─────────────────────────────────────────────
-# 4. BUILD HTML EMAIL
+# 6. BUILD HTML EMAIL
 # ─────────────────────────────────────────────
 
 def build_html_email(articles: list, date_str: str) -> str:
@@ -166,10 +311,14 @@ def build_html_email(articles: list, date_str: str) -> str:
                 f"<span style='background:#e8f4fd;color:#1a73e8;padding:2px 8px;border-radius:12px;font-size:11px;margin-right:4px;'>{kw}</span>"
                 for kw in art.get("matched_keywords", [])
             )
+            source_badge = ""
+            if art.get("type") == "scraped":
+                source_badge = "<span style='background:#fff3e0;color:#e65100;padding:2px 6px;border-radius:4px;font-size:10px;margin-left:6px;'>WEB</span>"
+
             items += f"""
             <div style="border-left:3px solid #1a73e8;padding:12px 16px;margin-bottom:24px;background:#fafafa;border-radius:0 6px 6px 0;">
                 <p style="margin:0 0 4px 0;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;">
-                    {art['source']} &nbsp;·&nbsp; {art.get('published','')}
+                    {art['source']}{source_badge} &nbsp;·&nbsp; {art.get('published','')}
                 </p>
                 <h3 style="margin:4px 0 8px 0;font-size:16px;color:#1a1a1a;">
                     <a href="{art['link']}" style="color:#1a1a1a;text-decoration:none;">{art['title']}</a>
@@ -180,6 +329,9 @@ def build_html_email(articles: list, date_str: str) -> str:
             </div>"""
         body = items
 
+    rss_count     = sum(1 for a in articles if a.get("type") == "rss")
+    scraped_count = sum(1 for a in articles if a.get("type") == "scraped")
+
     html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -187,7 +339,7 @@ def build_html_email(articles: list, date_str: str) -> str:
 
   <div style="background:linear-gradient(135deg,#1a73e8,#0d47a1);padding:24px 28px;border-radius:8px;margin-bottom:28px;">
     <h1 style="margin:0;color:white;font-size:22px;font-weight:700;">📡 Telecom Regulatory Intelligence</h1>
-    <p style="margin:6px 0 0 0;color:#b3d4ff;font-size:13px;">{date_str} &nbsp;·&nbsp; {len(articles)} article{'s' if len(articles)!=1 else ''} today</p>
+    <p style="margin:6px 0 0 0;color:#b3d4ff;font-size:13px;">{date_str} &nbsp;·&nbsp; {len(articles)} article{'s' if len(articles)!=1 else ''} &nbsp;·&nbsp; {rss_count} RSS · {scraped_count} Web</p>
   </div>
 
   {body}
@@ -204,12 +356,11 @@ def build_html_email(articles: list, date_str: str) -> str:
 
 
 # ─────────────────────────────────────────────
-# 5. SEND VIA GMAIL SMTP
+# 7. SEND VIA GMAIL SMTP
 # ─────────────────────────────────────────────
 
 def send_email(gmail_address: str, gmail_app_password: str, recipients: list, subject: str, html_body: str):
-    # Strip any accidental whitespace
-    gmail_address    = gmail_address.strip()
+    gmail_address      = gmail_address.strip()
     gmail_app_password = gmail_app_password.strip().replace(" ", "")
 
     print(f"  Connecting as: '{gmail_address}'")
@@ -229,7 +380,7 @@ def send_email(gmail_address: str, gmail_app_password: str, recipients: list, su
 
 
 # ─────────────────────────────────────────────
-# 6. MAIN
+# 8. MAIN
 # ─────────────────────────────────────────────
 
 def main():
@@ -240,6 +391,7 @@ def main():
     SHEET_URL_FEEDS      = os.environ["SHEET_URL_FEEDS"]
     SHEET_URL_KEYWORDS   = os.environ["SHEET_URL_KEYWORDS"]
     SHEET_URL_RECIPIENTS = os.environ["SHEET_URL_RECIPIENTS"]
+    SHEET_URL_SCRAPE     = os.environ["SHEET_URL_SCRAPE"]
     GMAIL_ADDRESS        = os.environ["GMAIL_ADDRESS"]
     GMAIL_APP_PASSWORD   = os.environ["GMAIL_APP_PASSWORD"]
 
@@ -251,29 +403,44 @@ def main():
         "feeds":      SHEET_URL_FEEDS,
         "keywords":   SHEET_URL_KEYWORDS,
         "recipients": SHEET_URL_RECIPIENTS,
+        "scrape":     SHEET_URL_SCRAPE,
     })
-    print(f"  {len(config['feeds'])} feeds | {len(config['keywords'])} keywords | {len(config['recipients'])} recipients")
+    print(f"  {len(config['feeds'])} RSS feeds | {len(config['scrape'])} scrape sites | {len(config['keywords'])} keywords | {len(config['recipients'])} recipients")
 
-    # 2. Fetch & filter
-    print("Fetching RSS feeds...")
     lookback = 3 if today.weekday() == 0 else 1
-    articles = fetch_articles(config["feeds"], config["keywords"], max_age_days=lookback)
-    print(f"  Found {len(articles)} matching articles")
 
-    # 3. Summarise
-    if articles:
+    # 2. Fetch RSS
+    print("Fetching RSS feeds...")
+    rss_articles = fetch_rss_articles(config["feeds"], config["keywords"], max_age_days=lookback)
+    print(f"  Found {len(rss_articles)} matching RSS articles")
+
+    # 3. Scrape websites
+    print("Scraping websites...")
+    scraped_articles = fetch_scraped_articles(config["scrape"], config["keywords"])
+
+    # 4. Merge and deduplicate
+    all_articles = deduplicate(rss_articles + scraped_articles)
+    print(f"  Total after deduplication: {len(all_articles)} articles")
+
+    # 5. Summarise
+    if all_articles:
         print("Generating summaries with Claude...")
-        articles = summarise_articles(articles, CLAUDE_API_KEY)
+        all_articles = summarise_articles(all_articles, CLAUDE_API_KEY)
 
-    # 4. Build email
-    html_body = build_html_email(articles, date_str)
+    # 6. Build email
+    html_body = build_html_email(all_articles, date_str)
     subject   = f"📡 Telecom Regulatory Intelligence – {date_str}"
 
-    # 5. Send
+    # 7. Send
     print("Sending email via Gmail...")
     send_email(GMAIL_ADDRESS, GMAIL_APP_PASSWORD, config["recipients"], subject, html_body)
 
     print("Done! ✓")
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 if __name__ == "__main__":
