@@ -32,4 +32,5 @@ jobs:
           SHEET_URL_RECIPIENTS: ${{ secrets.SHEET_URL_RECIPIENTS }}
           GMAIL_ADDRESS:        ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD:   ${{ secrets.GMAIL_APP_PASSWORD }}
+          SHEET_URL_SCRAPE:     ${{ secrets.SHEET_URL_SCRAPE }}
         run: python newsletter.py
