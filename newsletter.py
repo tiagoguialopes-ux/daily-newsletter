@@ -472,22 +472,6 @@ def build_html_email(articles: list, date_str: str, recipient_name: str) -> str:
 # 7. SEND VIA GMAIL SMTP (one email per recipient)
 # ─────────────────────────────────────────────
 
-def send_email(gmail_address: str, gmail_app_password: str, recipient: dict, subject: str, html_body: str):
-    gmail_address      = gmail_address.strip()
-    gmail_app_password = gmail_app_password.strip().replace(" ", "")
-
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"]    = f"Inteligência Regulatória Telecom <{gmail_address}>"
-    msg["To"]      = recipient["email"]
-    msg.attach(MIMEText(html_body, "html"))
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(gmail_address, gmail_app_password)
-        server.sendmail(gmail_address, [recipient["email"]], msg.as_string())
-
-    print(f"[OK] Email enviado para {recipient['email']} ({recipient['name']})")
-
 
 # ─────────────────────────────────────────────
 # 8. MAIN
