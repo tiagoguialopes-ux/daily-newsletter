@@ -30,4 +30,6 @@ jobs:
           SHEET_URL_SCRAPE:     ${{ secrets.SHEET_URL_SCRAPE }}
           GMAIL_ADDRESS:        ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD:   ${{ secrets.GMAIL_APP_PASSWORD }}
+          GITHUB_TOKEN:         ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY:    ${{ github.repository }}
         run: python newsletter.py
