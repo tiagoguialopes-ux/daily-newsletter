@@ -19,6 +19,57 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from urllib.parse import urljoin, urlparse
 from collections import defaultdict
+import base64
+
+
+# ─────────────────────────────────────────────
+# 0. SEEN URLs — persist via GitHub API
+# ─────────────────────────────────────────────
+
+SEEN_URLS_FILE = "seen_urls.txt"
+
+def load_seen_urls(github_token: str, github_repo: str) -> tuple[set, str]:
+    """Load seen URLs from GitHub repo. Returns (set of urls, file sha)."""
+    if not github_token or not github_repo:
+        return set(), ""
+    try:
+        url = f"https://api.github.com/repos/{github_repo}/contents/{SEEN_URLS_FILE}"
+        r = requests.get(url, headers={"Authorization": f"token {github_token}"}, timeout=10)
+        if r.status_code == 404:
+            print("  seen_urls.txt não existe ainda, a criar...")
+            return set(), ""
+        r.raise_for_status()
+        data = r.json()
+        sha = data.get("sha", "")
+        decoded = base64.b64decode(data["content"]).decode("utf-8")
+        urls = set(line.strip() for line in decoded.splitlines() if line.strip())
+        print(f"  {len(urls)} URLs já vistos carregados")
+        return urls, sha
+    except Exception as e:
+        print(f"[WARN] Não foi possível carregar seen_urls.txt: {e}")
+        return set(), ""
+
+
+def save_seen_urls(github_token: str, github_repo: str, urls: set, sha: str):
+    """Save seen URLs back to GitHub repo."""
+    if not github_token or not github_repo:
+        return
+    try:
+        content_str = "\n".join(sorted(urls))
+        encoded = base64.b64encode(content_str.encode("utf-8")).decode("utf-8")
+        api_url = f"https://api.github.com/repos/{github_repo}/contents/{SEEN_URLS_FILE}"
+        payload = {
+            "message": "chore: update seen_urls.txt",
+            "content": encoded,
+        }
+        if sha:
+            payload["sha"] = sha
+        r = requests.put(api_url, json=payload,
+                         headers={"Authorization": f"token {github_token}"}, timeout=15)
+        r.raise_for_status()
+        print(f"  seen_urls.txt actualizado ({len(urls)} URLs guardados)")
+    except Exception as e:
+        print(f"[WARN] Não foi possível guardar seen_urls.txt: {e}")
 
 
 # ─────────────────────────────────────────────
@@ -493,6 +544,8 @@ def main():
     SHEET_URL_SCRAPE     = os.environ["SHEET_URL_SCRAPE"]
     GMAIL_ADDRESS        = os.environ["GMAIL_ADDRESS"]
     GMAIL_APP_PASSWORD   = os.environ["GMAIL_APP_PASSWORD"]
+    GITHUB_TOKEN         = os.environ.get("GITHUB_TOKEN", "")
+    GITHUB_REPO          = os.environ.get("GITHUB_REPOSITORY", "")
 
     print(f"[{date_str}] A iniciar geração da newsletter...")
 
@@ -506,6 +559,10 @@ def main():
     })
     print(f"  {len(config['feeds'])} feeds RSS | {len(config['scrape'])} sites scraping | {len(config['keywords'])} palavras-chave | {len(config['recipients'])} destinatários")
 
+    # Load seen URLs
+    print("A carregar URLs já vistos...")
+    seen_urls, seen_sha = load_seen_urls(GITHUB_TOKEN, GITHUB_REPO)
+
     lookback = 3 if today.weekday() == 0 else 1
 
     # 2. Fetch RSS
@@ -516,6 +573,11 @@ def main():
     # 3. Scrape websites
     print("A fazer scraping dos sites...")
     scraped_articles = fetch_scraped_articles(config["scrape"], config["keywords"])
+
+    # 3b. Filter scraped articles against seen_urls
+    new_scraped = [a for a in scraped_articles if a["link"] not in seen_urls]
+    print(f"  {len(scraped_articles) - len(new_scraped)} artigos scraping já vistos ignorados, {len(new_scraped)} novos")
+    scraped_articles = new_scraped
 
     # 4. Merge and deduplicate
     all_articles = deduplicate(rss_articles + scraped_articles)
@@ -549,6 +611,14 @@ def main():
 
             server.sendmail(gmail_address, [recipient["email"]], msg.as_string())
             print(f"  [OK] Enviado para {recipient['email']} ({recipient['name']})")
+
+    # Update seen_urls with all articles sent today
+    new_url_set = seen_urls | {a["link"] for a in all_articles}
+    # Keep only last 5000 URLs to avoid file growing forever
+    if len(new_url_set) > 5000:
+        new_url_set = set(sorted(new_url_set)[-5000:])
+    print("A guardar URLs vistos...")
+    save_seen_urls(GITHUB_TOKEN, GITHUB_REPO, new_url_set, seen_sha)
 
     print("Concluído! ✓")
 
