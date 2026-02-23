@@ -46,7 +46,14 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
         if r.get("active","").lower() == "yes" and r.get("url")
     ]
 
-    keywords   = [r["keyword"] for r in keywords_rows   if r.get("active","").lower() == "yes" and r.get("keyword")]
+    # keywords: keyword, active, groups (optional — comma-separated group names that restrict this keyword)
+    keywords = []
+    for r in keywords_rows:
+        if r.get("active","").lower() != "yes" or not r.get("keyword"):
+            continue
+        groups_str = r.get("groups", "").strip()
+        restricted_groups = [g.strip() for g in groups_str.split(",") if g.strip()] if groups_str else []
+        keywords.append({"keyword": r["keyword"], "restricted_groups": restricted_groups})
 
     # recipients: email, active, name
     recipients = [
@@ -95,7 +102,11 @@ def fetch_rss_articles(feeds: list, keywords: list, max_age_days: int = 1) -> li
                 link    = entry.get("link", "")
 
                 text = (title + " " + summary).lower()
-                matched_keywords = [kw for kw in keywords if kw.lower() in text]
+                matched_keywords = [
+                    kw["keyword"] for kw in keywords
+                    if kw["keyword"].lower() in text
+                    and (not kw["restricted_groups"] or group in kw["restricted_groups"])
+                ]
 
                 if matched_keywords:
                     articles.append({
@@ -213,7 +224,11 @@ def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
                 continue
 
             full_text = (link_title + " " + text).lower()
-            matched_keywords = [kw for kw in keywords if kw.lower() in full_text]
+            matched_keywords = [
+                kw["keyword"] for kw in keywords
+                if kw["keyword"].lower() in full_text
+                and (not kw["restricted_groups"] or cfg["group"] in kw["restricted_groups"])
+            ]
 
             if matched_keywords:
                 articles.append({
@@ -299,24 +314,57 @@ Devolve APENAS o array JSON, sem qualquer outro texto.
             )
 
             raw = response.content[0].text.strip()
-            if raw.startswith("```"):
-                raw = raw.split("```")[1]
-                if raw.startswith("json"):
-                    raw = raw[4:]
+            # Strip markdown fences
+            if "```" in raw:
+                parts = raw.split("```")
+                for part in parts:
+                    part = part.strip()
+                    if part.startswith("json"):
+                        part = part[4:].strip()
+                    if part.startswith("["):
+                        raw = part
+                        break
             raw = raw.strip()
 
             summaries = json.loads(raw)
 
             for j, art in enumerate(batch):
-                art["title"]   = summaries[j]["title"]
-                art["summary"] = summaries[j]["summary"]
+                s = summaries[j] if j < len(summaries) else {}
+                art["title"]   = s.get("title", art["original_title"])
+                art["summary"] = s.get("summary", "")
+                # Validate we got a real summary, not empty
+                if not art["summary"] or len(art["summary"]) < 20:
+                    print(f"[WARN] Resumo vazio para artigo {j+1}, a tentar novamente...")
+                    retry = client.messages.create(
+                        model="claude-haiku-4-5-20251001",
+                        max_tokens=500,
+                        messages=[{"role": "user", "content": f'''Resume em português em ~100 palavras este artigo para uma newsletter de regulação de telecomunicações. Devolve apenas o resumo, sem mais texto.
+
+Título: {art["original_title"]}
+Conteúdo: {art["original_summary"]}'''}]
+                    )
+                    art["summary"] = retry.content[0].text.strip()
                 summarised.append(art)
 
         except Exception as e:
             print(f"[WARN] Resumo falhou para o lote {i//batch_size + 1}: {e}")
+            # Retry each article individually
             for art in batch:
-                art["title"]   = art["original_title"]
-                art["summary"] = art["original_summary"][:300]
+                try:
+                    retry = client.messages.create(
+                        model="claude-haiku-4-5-20251001",
+                        max_tokens=500,
+                        messages=[{"role": "user", "content": f'''Resume em português em ~100 palavras este artigo para uma newsletter de regulação de telecomunicações. Devolve apenas o resumo, sem mais texto.
+
+Título: {art["original_title"]}
+Conteúdo: {art["original_summary"]}'''}]
+                    )
+                    art["title"]   = art["original_title"]
+                    art["summary"] = retry.content[0].text.strip()
+                except Exception as e2:
+                    print(f"[WARN] Retry também falhou: {e2}")
+                    art["title"]   = art["original_title"]
+                    art["summary"] = "[Resumo não disponível]"
                 summarised.append(art)
 
     return summarised
@@ -517,11 +565,6 @@ def main():
             print(f"  [OK] Enviado para {recipient['email']} ({recipient['name']})")
 
     print("Concluído! ✓")
-
-
-if __name__ == "__main__":
-    main()
-
 
 
 if __name__ == "__main__":
