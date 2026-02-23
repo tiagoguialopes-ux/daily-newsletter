@@ -1,8 +1,10 @@
 """
-Daily Telecom Newsletter Generator
-===================================
-Reads config from Google Sheets, fetches RSS feeds AND scrapes websites,
-filters by keywords, summarises with Claude API, sends via Gmail SMTP.
+Daily Telecom Newsletter Generator v5
+======================================
+- Personalised greeting per recipient
+- Content in Portuguese
+- Articles grouped by source type
+- RSS + web scraping
 """
 
 import os
@@ -16,6 +18,7 @@ import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from urllib.parse import urljoin, urlparse
+from collections import defaultdict
 
 
 # ─────────────────────────────────────────────
@@ -36,12 +39,28 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
     recipients_rows = fetch_tab(sheet_csv_urls["recipients"])
     scrape_rows     = fetch_tab(sheet_csv_urls["scrape"])
 
-    feeds      = [r["url"]     for r in feeds_rows      if r.get("active","").lower() == "yes" and r.get("url")]
+    # feeds: name, url, active, group
+    feeds = [
+        {"url": r["url"], "group": r.get("group", "Outras Fontes")}
+        for r in feeds_rows
+        if r.get("active","").lower() == "yes" and r.get("url")
+    ]
+
     keywords   = [r["keyword"] for r in keywords_rows   if r.get("active","").lower() == "yes" and r.get("keyword")]
-    recipients = [r["email"]   for r in recipients_rows if r.get("active","").lower() == "yes" and r.get("email")]
-    scrape     = [(r["name"], r["url"], r.get("selector","a"))
-                  for r in scrape_rows
-                  if r.get("active","").lower() == "yes" and r.get("url")]
+
+    # recipients: email, active, name
+    recipients = [
+        {"email": r["email"], "name": r.get("name", r["email"])}
+        for r in recipients_rows
+        if r.get("active","").lower() == "yes" and r.get("email")
+    ]
+
+    # scrape: name, url, selector, active, group
+    scrape = [
+        {"name": r["name"], "url": r["url"], "selector": r.get("selector","a"), "group": r.get("group","Outras Fontes")}
+        for r in scrape_rows
+        if r.get("active","").lower() == "yes" and r.get("url")
+    ]
 
     return {"feeds": feeds, "keywords": keywords, "recipients": recipients, "scrape": scrape}
 
@@ -50,11 +69,13 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
 # 2. FETCH & FILTER RSS FEEDS
 # ─────────────────────────────────────────────
 
-def fetch_rss_articles(feed_urls: list, keywords: list, max_age_days: int = 1) -> list:
+def fetch_rss_articles(feeds: list, keywords: list, max_age_days: int = 1) -> list:
     cutoff = datetime.datetime.utcnow() - datetime.timedelta(days=max_age_days)
     articles = []
 
-    for url in feed_urls:
+    for feed_cfg in feeds:
+        url   = feed_cfg["url"]
+        group = feed_cfg["group"]
         try:
             feed = feedparser.parse(url)
             source_name = feed.feed.get("title", url)
@@ -79,6 +100,7 @@ def fetch_rss_articles(feed_urls: list, keywords: list, max_age_days: int = 1) -
                 if matched_keywords:
                     articles.append({
                         "source":           source_name,
+                        "group":            group,
                         "original_title":   title,
                         "original_summary": summary[:1000],
                         "link":             link,
@@ -129,11 +151,11 @@ def get_article_links(source_name: str, index_url: str, selector: str) -> list:
                 seen.add(url)
                 unique.append((title, url))
 
-        print(f"  [{source_name}] Found {len(unique)} links")
+        print(f"  [{source_name}] {len(unique)} links encontrados")
         return unique[:30]
 
     except Exception as e:
-        print(f"[WARN] Failed to get links from {index_url}: {e}")
+        print(f"[WARN] Falhou ao obter links de {index_url}: {e}")
         return []
 
 
@@ -166,14 +188,19 @@ def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
     try:
         from bs4 import BeautifulSoup
     except ImportError:
-        print("[WARN] beautifulsoup4 not installed, skipping scraping")
+        print("[WARN] beautifulsoup4 não instalado, a ignorar scraping")
         return []
 
     articles = []
     seen_urls = set()
 
-    for source_name, index_url, selector in scrape_config:
-        print(f"  Scraping {source_name}...")
+    for cfg in scrape_config:
+        source_name = cfg["name"]
+        index_url   = cfg["url"]
+        selector    = cfg["selector"]
+        group       = cfg["group"]
+
+        print(f"  A fazer scraping de {source_name}...")
         links = get_article_links(source_name, index_url, selector)
 
         for link_title, article_url in links:
@@ -181,11 +208,8 @@ def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
                 continue
             seen_urls.add(article_url)
 
-            title_lower = link_title.lower()
-            quick_match = [kw for kw in keywords if kw.lower() in title_lower]
-
             text = scrape_article(article_url)
-            if not text and not quick_match:
+            if not text:
                 continue
 
             full_text = (link_title + " " + text).lower()
@@ -194,6 +218,7 @@ def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
             if matched_keywords:
                 articles.append({
                     "source":           source_name,
+                    "group":            group,
                     "original_title":   link_title or article_url,
                     "original_summary": text[:1000],
                     "link":             article_url,
@@ -204,7 +229,7 @@ def fetch_scraped_articles(scrape_config: list, keywords: list) -> list:
 
             time.sleep(0.5)
 
-    print(f"  Scraping complete — {len(articles)} matching articles found")
+    print(f"  Scraping concluído — {len(articles)} artigos encontrados")
     return articles
 
 
@@ -232,7 +257,7 @@ def deduplicate(articles: list) -> list:
 
 
 # ─────────────────────────────────────────────
-# 5. SUMMARISE WITH CLAUDE API
+# 5. SUMMARISE WITH CLAUDE API (in Portuguese)
 # ─────────────────────────────────────────────
 
 def summarise_articles(articles: list, api_key: str) -> list:
@@ -249,20 +274,20 @@ def summarise_articles(articles: list, api_key: str) -> list:
         articles_text = ""
         for j, art in enumerate(batch):
             articles_text += f"""
-ARTICLE {j+1}:
-Source: {art['source']}
-Original Title: {art['original_title']}
-Content: {art['original_summary']}
+ARTIGO {j+1}:
+Fonte: {art['source']}
+Título original: {art['original_title']}
+Conteúdo: {art['original_summary']}
 ---"""
 
-        prompt = f"""You are an editor for a professional telecom industry newsletter read by regulatory affairs experts at NOS (a Portuguese telco).
+        prompt = f"""És o editor de uma newsletter profissional de telecomunicações lida por especialistas em assuntos regulatórios da NOS (operadora portuguesa de telecomunicações).
 
-For each article below, produce:
-1. A clear, professional TITLE (max 12 words)
-2. A SUMMARY of exactly ~100 words that captures the key facts, regulatory implications, and why it matters to the European telecom industry.
+Para cada artigo abaixo, produz:
+1. Um TÍTULO claro e profissional em português (máximo 12 palavras)
+2. Um RESUMO em português de exatamente ~100 palavras que capture os factos principais, as implicações regulatórias e a relevância para a indústria europeia de telecomunicações.
 
-Return your response as a JSON array, one object per article, with keys: "title" and "summary".
-Return ONLY the JSON array, no other text.
+Devolve a resposta como um array JSON, um objeto por artigo, com as chaves: "title" e "summary".
+Devolve APENAS o array JSON, sem qualquer outro texto.
 
 {articles_text}"""
 
@@ -288,7 +313,7 @@ Return ONLY the JSON array, no other text.
                 summarised.append(art)
 
         except Exception as e:
-            print(f"[WARN] Summarisation failed for batch {i//batch_size + 1}: {e}")
+            print(f"[WARN] Resumo falhou para o lote {i//batch_size + 1}: {e}")
             for art in batch:
                 art["title"]   = art["original_title"]
                 art["summary"] = art["original_summary"][:300]
@@ -301,12 +326,33 @@ Return ONLY the JSON array, no other text.
 # 6. BUILD HTML EMAIL
 # ─────────────────────────────────────────────
 
-def build_html_email(articles: list, date_str: str) -> str:
-    if not articles:
-        body = "<p style='color:#666;'>No relevant articles were found today matching your keywords.</p>"
-    else:
+# Group order and Portuguese labels
+GROUP_ORDER = [
+    "Reguladores Nacionais",
+    "Instituições Europeias",
+    "Publicações Nacionais",
+    "Publicações Especializadas",
+    "Reguladores Europeus",
+    "Outras Fontes",
+]
+
+def build_html_email(articles: list, date_str: str, recipient_name: str) -> str:
+    # Group articles
+    grouped = defaultdict(list)
+    for art in articles:
+        grouped[art.get("group", "Outras Fontes")].append(art)
+
+    # Build sections in defined order
+    sections = ""
+    total = 0
+    for group_name in GROUP_ORDER:
+        group_articles = grouped.get(group_name, [])
+        if not group_articles:
+            continue
+
+        total += len(group_articles)
         items = ""
-        for art in articles:
+        for art in group_articles:
             kw_tags = " ".join(
                 f"<span style='background:#e8f4fd;color:#1a73e8;padding:2px 8px;border-radius:12px;font-size:11px;margin-right:4px;'>{kw}</span>"
                 for kw in art.get("matched_keywords", [])
@@ -315,38 +361,57 @@ def build_html_email(articles: list, date_str: str) -> str:
             if art.get("type") == "scraped":
                 source_badge = "<span style='background:#fff3e0;color:#e65100;padding:2px 6px;border-radius:4px;font-size:10px;margin-left:6px;'>WEB</span>"
 
+            pub = art.get("published","")
+            pub_str = f" &nbsp;·&nbsp; {pub}" if pub and pub != "unknown" else ""
+
             items += f"""
-            <div style="border-left:3px solid #1a73e8;padding:12px 16px;margin-bottom:24px;background:#fafafa;border-radius:0 6px 6px 0;">
+            <div style="border-left:3px solid #1a73e8;padding:12px 16px;margin-bottom:20px;background:#fafafa;border-radius:0 6px 6px 0;">
                 <p style="margin:0 0 4px 0;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;">
-                    {art['source']}{source_badge} &nbsp;·&nbsp; {art.get('published','')}
+                    {art['source']}{source_badge}{pub_str}
                 </p>
                 <h3 style="margin:4px 0 8px 0;font-size:16px;color:#1a1a1a;">
                     <a href="{art['link']}" style="color:#1a1a1a;text-decoration:none;">{art['title']}</a>
                 </h3>
                 <p style="margin:0 0 10px 0;font-size:14px;color:#444;line-height:1.6;">{art['summary']}</p>
                 <div style="margin-bottom:6px;">{kw_tags}</div>
-                <a href="{art['link']}" style="font-size:12px;color:#1a73e8;">Read full article →</a>
+                <a href="{art['link']}" style="font-size:12px;color:#1a73e8;">Ler artigo completo →</a>
             </div>"""
-        body = items
 
-    rss_count     = sum(1 for a in articles if a.get("type") == "rss")
-    scraped_count = sum(1 for a in articles if a.get("type") == "scraped")
+        sections += f"""
+        <div style="margin-bottom:32px;">
+            <h2 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1a73e8;border-bottom:2px solid #e8f0fe;padding-bottom:8px;margin-bottom:16px;">
+                {group_name} <span style="font-weight:400;color:#999;">({len(group_articles)})</span>
+            </h2>
+            {items}
+        </div>"""
+
+    if not sections:
+        sections = "<p style='color:#666;'>Não foram encontrados artigos relevantes hoje para as palavras-chave definidas.</p>"
+
+    # First name only for greeting
+    first_name = recipient_name.split()[0] if recipient_name else "colega"
 
     html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
 <body style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto;padding:20px;color:#1a1a1a;">
 
-  <div style="background:linear-gradient(135deg,#1a73e8,#0d47a1);padding:24px 28px;border-radius:8px;margin-bottom:28px;">
-    <h1 style="margin:0;color:white;font-size:22px;font-weight:700;">📡 Telecom Regulatory Intelligence</h1>
-    <p style="margin:6px 0 0 0;color:#b3d4ff;font-size:13px;">{date_str} &nbsp;·&nbsp; {len(articles)} article{'s' if len(articles)!=1 else ''} &nbsp;·&nbsp; {rss_count} RSS · {scraped_count} Web</p>
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#1a73e8,#0d47a1);padding:24px 28px;border-radius:8px;margin-bottom:24px;">
+    <h1 style="margin:0;color:white;font-size:22px;font-weight:700;">📡 Inteligência Regulatória Telecom</h1>
+    <p style="margin:6px 0 0 0;color:#b3d4ff;font-size:13px;">{date_str} &nbsp;·&nbsp; {total} artigo{'s' if total!=1 else ''}</p>
   </div>
 
-  {body}
+  <!-- Personalised greeting -->
+  <p style="font-size:15px;color:#333;margin-bottom:24px;">Olá, {first_name}!</p>
 
+  <!-- Grouped articles -->
+  {sections}
+
+  <!-- Footer -->
   <div style="border-top:1px solid #eee;margin-top:32px;padding-top:16px;font-size:11px;color:#999;">
-    <p>This newsletter is automatically generated and sent to regulatory affairs teams at NOS.<br>
-    Keywords monitored: Digital · 5G · Net Neutrality · Open Internet · Cloud · Fair Contribution · Interconnection · Market Analysis · Universal Service · Spectrum</p>
+    <p>Esta newsletter é gerada automaticamente e enviada às equipas de assuntos regulatórios da NOS.<br>
+    Palavras-chave monitorizadas: Digital · 5G · Neutralidade da Rede · Internet Aberta · Cloud · Contribuição Justa · Interligação · Análise de Mercado · Serviço Universal · Espectro</p>
   </div>
 
 </body>
@@ -356,27 +421,24 @@ def build_html_email(articles: list, date_str: str) -> str:
 
 
 # ─────────────────────────────────────────────
-# 7. SEND VIA GMAIL SMTP
+# 7. SEND VIA GMAIL SMTP (one email per recipient)
 # ─────────────────────────────────────────────
 
-def send_email(gmail_address: str, gmail_app_password: str, recipients: list, subject: str, html_body: str):
+def send_email(gmail_address: str, gmail_app_password: str, recipient: dict, subject: str, html_body: str):
     gmail_address      = gmail_address.strip()
     gmail_app_password = gmail_app_password.strip().replace(" ", "")
 
-    print(f"  Connecting as: '{gmail_address}'")
-    print(f"  Password length: {len(gmail_app_password)} chars")
-
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"]    = f"Telecom Newsletter <{gmail_address}>"
-    msg["To"]      = ", ".join(recipients)
+    msg["From"]    = f"Inteligência Regulatória Telecom <{gmail_address}>"
+    msg["To"]      = recipient["email"]
     msg.attach(MIMEText(html_body, "html"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(gmail_address, gmail_app_password)
-        server.sendmail(gmail_address, recipients, msg.as_string())
+        server.sendmail(gmail_address, [recipient["email"]], msg.as_string())
 
-    print(f"[OK] Email sent to {', '.join(recipients)}")
+    print(f"[OK] Email enviado para {recipient['email']} ({recipient['name']})")
 
 
 # ─────────────────────────────────────────────
@@ -385,7 +447,12 @@ def send_email(gmail_address: str, gmail_app_password: str, recipients: list, su
 
 def main():
     today    = datetime.date.today()
-    date_str = today.strftime("%A, %d %B %Y")
+    # Portuguese date format
+    months_pt = ["janeiro","fevereiro","março","abril","maio","junho",
+                  "julho","agosto","setembro","outubro","novembro","dezembro"]
+    weekdays_pt = ["segunda-feira","terça-feira","quarta-feira","quinta-feira",
+                   "sexta-feira","sábado","domingo"]
+    date_str = f"{weekdays_pt[today.weekday()]}, {today.day} de {months_pt[today.month-1]} de {today.year}"
 
     CLAUDE_API_KEY       = os.environ["CLAUDE_API_KEY"]
     SHEET_URL_FEEDS      = os.environ["SHEET_URL_FEEDS"]
@@ -395,47 +462,61 @@ def main():
     GMAIL_ADDRESS        = os.environ["GMAIL_ADDRESS"]
     GMAIL_APP_PASSWORD   = os.environ["GMAIL_APP_PASSWORD"]
 
-    print(f"[{date_str}] Starting newsletter generation...")
+    print(f"[{date_str}] A iniciar geração da newsletter...")
 
     # 1. Load config
-    print("Loading config from Google Sheets...")
+    print("A carregar configuração do Google Sheets...")
     config = load_config_from_sheet({
         "feeds":      SHEET_URL_FEEDS,
         "keywords":   SHEET_URL_KEYWORDS,
         "recipients": SHEET_URL_RECIPIENTS,
         "scrape":     SHEET_URL_SCRAPE,
     })
-    print(f"  {len(config['feeds'])} RSS feeds | {len(config['scrape'])} scrape sites | {len(config['keywords'])} keywords | {len(config['recipients'])} recipients")
+    print(f"  {len(config['feeds'])} feeds RSS | {len(config['scrape'])} sites scraping | {len(config['keywords'])} palavras-chave | {len(config['recipients'])} destinatários")
 
     lookback = 3 if today.weekday() == 0 else 1
 
     # 2. Fetch RSS
-    print("Fetching RSS feeds...")
+    print("A obter feeds RSS...")
     rss_articles = fetch_rss_articles(config["feeds"], config["keywords"], max_age_days=lookback)
-    print(f"  Found {len(rss_articles)} matching RSS articles")
+    print(f"  {len(rss_articles)} artigos RSS encontrados")
 
     # 3. Scrape websites
-    print("Scraping websites...")
+    print("A fazer scraping dos sites...")
     scraped_articles = fetch_scraped_articles(config["scrape"], config["keywords"])
 
     # 4. Merge and deduplicate
     all_articles = deduplicate(rss_articles + scraped_articles)
-    print(f"  Total after deduplication: {len(all_articles)} articles")
+    print(f"  Total após deduplicação: {len(all_articles)} artigos")
 
     # 5. Summarise
     if all_articles:
-        print("Generating summaries with Claude...")
+        print("A gerar resumos com Claude...")
         all_articles = summarise_articles(all_articles, CLAUDE_API_KEY)
 
-    # 6. Build email
-    html_body = build_html_email(all_articles, date_str)
-    subject   = f"📡 Telecom Regulatory Intelligence – {date_str}"
+    subject = f"📡 Inteligência Regulatória Telecom – {today.day} de {months_pt[today.month-1]} de {today.year}"
 
-    # 7. Send
-    print("Sending email via Gmail...")
-    send_email(GMAIL_ADDRESS, GMAIL_APP_PASSWORD, config["recipients"], subject, html_body)
+    # 6. Send one personalised email per recipient
+    print("A enviar emails...")
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        gmail_address      = GMAIL_ADDRESS.strip()
+        gmail_app_password = GMAIL_APP_PASSWORD.strip().replace(" ", "")
+        server.login(gmail_address, gmail_app_password)
 
-    print("Done! ✓")
+        for recipient in config["recipients"]:
+            first_name = recipient["name"].split()[0] if recipient["name"] else "colega"
+            html_body  = build_html_email(all_articles, date_str, recipient["name"])
+
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = subject
+            msg["From"]    = f"Inteligência Regulatória Telecom <{gmail_address}>"
+            msg["To"]      = recipient["email"]
+            msg.attach(MIMEText(html_body, "html"))
+
+            server.sendmail(gmail_address, [recipient["email"]], msg.as_string())
+            print(f"  [OK] Enviado para {recipient['email']} ({recipient['name']})")
+
+    print("Concluído! ✓")
 
 
 if __name__ == "__main__":
