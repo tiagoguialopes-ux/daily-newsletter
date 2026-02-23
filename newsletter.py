@@ -41,7 +41,7 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
 
     # feeds: name, url, active, group
     feeds = [
-        {"url": r["url"], "group": r.get("group", "Outras Fontes")}
+        {"url": r["url"], "group": r.get("Group") or r.get("group") or "Outras Fontes"}
         for r in feeds_rows
         if r.get("active","").lower() == "yes" and r.get("url")
     ]
@@ -51,7 +51,7 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
     for r in keywords_rows:
         if r.get("active","").lower() != "yes" or not r.get("keyword"):
             continue
-        groups_str = r.get("groups", "").strip()
+        groups_str = (r.get("Groups") or r.get("groups") or "").strip()
         restricted_groups = [g.strip() for g in groups_str.split(",") if g.strip()] if groups_str else []
         keywords.append({"keyword": r["keyword"], "restricted_groups": restricted_groups})
 
@@ -64,7 +64,7 @@ def load_config_from_sheet(sheet_csv_urls: dict) -> dict:
 
     # scrape: name, url, selector, active, group
     scrape = [
-        {"name": r["name"], "url": r["url"], "selector": r.get("selector","a"), "group": r.get("group","Outras Fontes")}
+        {"name": r["name"], "url": r["url"], "selector": r.get("selector","a"), "group": r.get("Group") or r.get("group") or "Outras Fontes"}
         for r in scrape_rows
         if r.get("active","").lower() == "yes" and r.get("url")
     ]
@@ -529,7 +529,9 @@ def main():
     subject = f"📡 Inteligência Regulatória Telecom – {today.day} de {months_pt[today.month-1]} de {today.year}"
 
     # 6. Send one personalised email per recipient
-    print("A enviar emails...")
+    print(f"A enviar emails para {len(config['recipients'])} destinatários...")
+    for r in config["recipients"]:
+        print(f"  Destinatário: {r['email']} ({r['name']})")
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         gmail_address      = GMAIL_ADDRESS.strip()
         gmail_app_password = GMAIL_APP_PASSWORD.strip().replace(" ", "")
