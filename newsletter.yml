@@ -5,6 +5,9 @@ on:
     - cron: '0 7 * * 1-5'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   send-newsletter:
     runs-on: ubuntu-latest
