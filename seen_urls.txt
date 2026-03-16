@@ -8,6 +8,7 @@ https://digital-strategy.ec.europa.eu/en/news/5g-use-cases-future-multiannual-fi
 https://digital-strategy.ec.europa.eu/en/news/commission-and-edpb-publish-contributions-consultation-draft-joint-guidelines-interplay-between-dma
 https://digital-strategy.ec.europa.eu/en/news/commission-announces-eu75-million-euro-3c-project-build-federated-telco-edge-cloud-infrastructure
 https://digital-strategy.ec.europa.eu/en/news/commission-holds-first-meeting-special-panel-child-safety-online
+https://digital-strategy.ec.europa.eu/en/news/commission-hosted-workshop-enlargement-countries-discuss-online-risks-and-platform-regulation
 https://digital-strategy.ec.europa.eu/en/news/commission-launches-investigation-shein-under-digital-services-act
 https://digital-strategy.ec.europa.eu/en/news/commission-publishes-feedback-draft-guidance-assist-companies-applying-cyber-resilience-act
 https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-support-teachers-key-digital-education-priorities
@@ -23,6 +24,7 @@ https://digital-strategy.ec.europa.eu/en/news/harmonised-transparency-reports-un
 https://digital-strategy.ec.europa.eu/en/news/henna-virkkunen-and-indias-minister-external-affairs-dr-s-jaishankar-launch-european-legal-gateway
 https://digital-strategy.ec.europa.eu/en/news/international-womens-day-2026-closing-gender-gap-digital
 https://digital-strategy.ec.europa.eu/en/news/join-european-network-ai-powered-advanced-screening-centres
+https://digital-strategy.ec.europa.eu/en/news/open-eu-foundry-status-granted-innovative-chiplet-facility
 https://digital-strategy.ec.europa.eu/en/news/protecteu-commission-presents-new-counterterrorism-agenda
 https://digital-strategy.ec.europa.eu/en/news/roam-home-commission-proposes-open-negotiations-extend-eu-roaming-western-balkans
 https://digital-strategy.ec.europa.eu/en/news/two-years-digital-services-act-allows-50-million-content-moderation-decisions-platforms-be-reversed
@@ -72,6 +74,7 @@ https://pplware.sapo.pt/internet/antenas-de-telecomunicacoes-no-condominio-o-que
 https://pplware.sapo.pt/internet/ciberseguranca-red-team-e-blue-team-quais-as-diferencas/
 https://pplware.sapo.pt/internet/gmail-aumenta-tamanho-das-mensagens-enviadas-e-recebidas-mas-nao-e-para-todos/
 https://pplware.sapo.pt/internet/irao-intensifica-operacoes-digitais-e-portugal-entra-no-mapa-de-risco/
+https://pplware.sapo.pt/internet/meta-podera-despedir-20-dos-seus-colaboradores-e-a-culpa-e-da-ia/
 https://pplware.sapo.pt/internet/nova-era-dos-testes-de-penetracao-kali-linux-integra-ia-claude/
 https://pplware.sapo.pt/internet/operacao-leak-desmantelada-maior-plataforma-de-phishing-em-acao-internacional/
 https://pplware.sapo.pt/internet/portugal-em-risco-como-o-e-mail-certificados-e-cdns-deixam-o-pais-vulneravel/
@@ -80,7 +83,9 @@ https://pplware.sapo.pt/internet/qualcomm-6g-promete-muito-mais-do-que-apenas-ve
 https://pplware.sapo.pt/internet/quebramar-gera-e65-milhoes-com-estrategia-de-fidelizacao-que-ja-representa-76-das-vendas/
 https://pplware.sapo.pt/internet/seguranca-social-datas-de-pagamento-das-prestacoes-sociais-e-pensoes-em-marco/
 https://pplware.sapo.pt/internet/seguranca/ha-uma-falha-grave-do-windows-a-venda-na-dark-web-por-220-mil-dolares/
+https://pplware.sapo.pt/internet/seguranca/hacker-escondeu-malware-em-jogos-na-steam-para-infetar-computadores/
 https://pplware.sapo.pt/internet/seguranca/iptv-a-conta-bancaria-pode-identificar-mais-rapido-que-o-endereco-ip/
+https://pplware.sapo.pt/internet/seguranca/meta-traz-seguranca-no-whatsapp-e-facebook-e-messenger-ia-e-biometria-contra-burlas/
 https://pplware.sapo.pt/internet/seguranca/russia-esta-a-atacar-o-signal-e-o-whatsapp-para-espiar-militares-e-jornalistas/
 https://pplware.sapo.pt/internet/seguranca/tiktok-nao-traz-encriptacao-para-as-mensagens-e-isso-e-uma-falha-de-seguranca/
 https://pplware.sapo.pt/internet/seguranca/um-descanso-para-os-pais-whatsapp-lanca-contas-geridas-para-proteger-mais-novos/
@@ -108,8 +113,10 @@ https://pplware.sapo.pt/motores/vision-gran-turismo-o-primeiro-hiperdesportivo-d
 https://pplware.sapo.pt/multimedia-2/musica/dica-como-identificar-uma-musica-apenas-a-trautear-com-a-google/
 https://pplware.sapo.pt/smartphones-tablets/android/android-auto-bloqueia-navegacao-do-google-maps-e-do-waze-no-hud/
 https://pplware.sapo.pt/smartphones-tablets/android/oppo-find-x9-ultra-novo-colosso-da-fotografia-movel-chega-a-europa-em-2026/
+https://pplware.sapo.pt/smartphones-tablets/android/usar-o-whatsapp-sem-conta-nova-funcao-guest-chats-muda-as-regras-do-jogo/
 https://pplware.sapo.pt/smartphones-tablets/como-saber-se-uma-chamada-telefonica-e-ia-ou-nao-a-eset-explica/
 https://pplware.sapo.pt/smartphones-tablets/tcl-note-a1-nxtpaper-escrever-como-no-papel-mas-em-formato-digital/
+https://pplware.sapo.pt/software/chaves-digitais-windows-office-onde-compensa-poupar-2026/
 https://pplware.sapo.pt/software/nikto-ferramenta-open-source-para-descobrir-vulnerabilidades-em-servidores-web/
 https://pplware.sapo.pt/software/samsung-copiou-a-apple-para-o-seu-novo-botao-de-pesquisa-ate-lhe-chamou-finder/
 https://pplware.sapo.pt/zzpublicidade/estas-chaves-digitais-podem-salvar-o-seu-pc/
@@ -122,6 +129,7 @@ https://totaltele.com/huawei-launches-enhanced-ai-centric-network-solutions-for-
 https://totaltele.com/huawei-releases-115-industrial-intelligence-showcases-with-global-customers/
 https://totaltele.com/huawei-ushers-in-the-agentic-internet-era-at-mwc-2026/
 https://totaltele.com/huawei-will-release-the-agentic-core-solution-to-accelerate-the-commercial-use-of-agent-networks/
+https://totaltele.com/indosat-and-safaricom-partner-to-share-ai-learnings/
 https://totaltele.com/mobile-ai-is-here-why-networks-must-evolve-for-the-age-of-ai-agents/
 https://totaltele.com/openreachs-network-to-support-acoustic-sensing-for-leaky-water-pipes/
 https://totaltele.com/putting-data-in-action-transforming-digital-shadows-to-digital-twins/
@@ -191,14 +199,19 @@ https://www.anacom.pt/render.jsp?contentId=1828274
 https://www.anacom.pt/render.jsp?contentId=1828354
 https://www.anacom.pt/render.jsp?contentId=1828418
 https://www.anacom.pt/render.jsp?contentId=1828476
+https://www.anacom.pt/render.jsp?contentId=1828504
 https://www.anacom.pt/render.jsp?contentId=1828509
 https://www.anacom.pt/render.jsp?contentId=1828511
+https://www.anacom.pt/render.jsp?contentId=1828524
 https://www.anacom.pt/render.jsp?contentId=1828533
 https://www.anacom.pt/render.jsp?contentId=1828597
 https://www.anacom.pt/render.jsp?contentId=1828707
 https://www.anacom.pt/render.jsp?contentId=1828788
 https://www.anacom.pt/render.jsp?contentId=1828794
+https://www.anacom.pt/render.jsp?contentId=1828799
 https://www.anacom.pt/render.jsp?contentId=1828827
+https://www.anacom.pt/render.jsp?contentId=1828894
+https://www.anacom.pt/render.jsp?contentId=1828977
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/reseaux-en-fibre-optique-190226.html
 https://www.bundesnetzagentur.de/DE/Allgemeines/Presse/Pressemitteilungen/start.html
 https://www.bundesnetzagentur.de/EN/Areas/Digitalisation/Data/DataEconomy/start.html
@@ -254,12 +267,15 @@ https://www.comreg.ie/vodafone-ireland-to-refund-over-e894000-in-roaming-charges
 https://www.lightreading.com/5g/aws-has-quietly-torn-up-its-cloud-ran-silicon-plan
 https://www.lightreading.com/5g/dnb-and-telekom-malaysia-disagree-on-early-termination-of-5g-wholesale-contract
 https://www.lightreading.com/5g/eurobites-o2-offers-free-5g-sa-upgrades
+https://www.lightreading.com/5g/eurobites-vodafone-offers-speed-boost-add-on-to-data-guzzlers-on-the-go
 https://www.lightreading.com/5g/huawei-cloud-core-network-ushers-in-a-new-era-of-experience-monetization
 https://www.lightreading.com/5g/mwc-2026-will-be-rocked-by-telecom-derangement-syndrome
+https://www.lightreading.com/5g/nec-isn-t-giving-up-on-5g-ran-but-planning-a-massive-attack
 https://www.lightreading.com/5g/vmo2-reviews-ran-suppliers-in-5g-network-upgrade
 https://www.lightreading.com/5g/vodafone-and-tiami-inject-bat-like-sensing-into-5g
 https://www.lightreading.com/6g/t-mobile-tests-6g-with-ericsson-prototypes
 https://www.lightreading.com/6g/us-war-dept-storms-mwc-with-ocudu-plan-to-blow-open-5g-and-6g
+https://www.lightreading.com/ai-machine-learning/china-s-telcos-join-the-openclaw-craze
 https://www.lightreading.com/ai-machine-learning/dt-puts-the-chat-into-chatbot-with-ai-for-voice-calls
 https://www.lightreading.com/ai-machine-learning/intel-discusses-ai-5g-innovation-and-the-road-to-6g
 https://www.lightreading.com/ai-machine-learning/jio-targets-largest-token-generator-role-as-ai-reshapes-telecom-economics
@@ -285,6 +301,7 @@ https://www.lightreading.com/fixed-wireless-access/cbrs-shared-spectrum-model-is
 https://www.lightreading.com/fttx/eurobites-openreach-trials-fiber-based-leak-detection-system
 https://www.lightreading.com/optical-networking/ciena-eyes-even-more-growth-as-optical-market-set-to-double---ceo
 https://www.lightreading.com/optical-networking/corning-expands-ai-data-center-portfolio
+https://www.lightreading.com/optical-networking/nvidia-s-optical-bet-validation-or-something-more-complicated-
 https://www.lightreading.com/regulatory-politics/wispa-raises-interference-concerns-about-spacex-s-mega-constellation
 https://www.lightreading.com/satellite/amazon-thinks-spacex-s-data-center-plan-is-a-bunch-of-hooey
 https://www.lightreading.com/satellite/cc-s-carr-pitches-plan-to-apply-spectrum-to-weird-space-stuff-
