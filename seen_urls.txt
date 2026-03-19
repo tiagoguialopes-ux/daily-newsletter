@@ -38,6 +38,7 @@ https://digital-strategy.ec.europa.eu/en/news/working-groups-advance-discussions
 https://eco.sapo.pt/eventos
 https://eco.sapo.pt/ultimas/
 https://pplware.sapo.pt/apple/apple-lanca-airpods-max-2-traducao-em-tempo-real-e-cancelamento-ativo-de-ruido-melhorado/
+https://pplware.sapo.pt/apple/apple-lanca-ios-26-4-rc-para-iphone-com-varias-novidades-a-caminho/
 https://pplware.sapo.pt/apple/apple-music-passa-a-identificar-conteudos-criados-com-inteligencia-artificial/
 https://pplware.sapo.pt/apple/apple-voltou-a-ser-multada-no-brasil-por-vender-o-iphone-sem-carregador/
 https://pplware.sapo.pt/apple/ios-26-4-beta-4-ja-chegou-e-traz-novidades-novos-emojis-e-mudancas-no-design/
@@ -75,8 +76,10 @@ https://pplware.sapo.pt/informacao/o-mundo-quer-a-arma-ucraniana-contra-drones-s
 https://pplware.sapo.pt/informacao/satelites-captam-movimento-inesperado-irao-reativa-submarino-frankenstein-russo/
 https://pplware.sapo.pt/informacao/suecia-pede-aos-cidadaos-que-guardem-dinheiro-em-casa-quanto-devemos-ter/
 https://pplware.sapo.pt/inteligencia-artificial/alunos-nao-conseguem-raciocinar-professores-alertam-para-o-perigo-da-ia-nas-criancas/
+https://pplware.sapo.pt/inteligencia-artificial/chatgpt-ajudou-a-criar-uma-vacina-de-arnm-para-uma-cadela-com-cancro/
 https://pplware.sapo.pt/inteligencia-artificial/claude-sofre-interrupcao-global-e-deixa-utilizadores-sem-acesso/
 https://pplware.sapo.pt/inteligencia-artificial/como-a-ue-esta-a-usar-ia-para-detetar-alimentos-perigosos-antes-que-cheguem-as-prateleiras/
+https://pplware.sapo.pt/inteligencia-artificial/como-esta-startup-portuguesa-usa-ia-para-proteger-civis-em-zonas-de-conflito/
 https://pplware.sapo.pt/inteligencia-artificial/de-180-dolares-para-82-000-fatura-astronomica-chegou-apos-acesso-indevido-a-servicos-gemini/
 https://pplware.sapo.pt/inteligencia-artificial/lideres-mundiais-assinam-nova-declaracao-pro-humana-sobre-a-ia/
 https://pplware.sapo.pt/inteligencia-artificial/musk-anuncia-a-macrohard-nova-alianca-entre-tesla-e-xai-promete-transformar-o-software/
@@ -91,6 +94,7 @@ https://pplware.sapo.pt/internet/irao-intensifica-operacoes-digitais-e-portugal-
 https://pplware.sapo.pt/internet/meta-podera-despedir-20-dos-seus-colaboradores-e-a-culpa-e-da-ia/
 https://pplware.sapo.pt/internet/nova-era-dos-testes-de-penetracao-kali-linux-integra-ia-claude/
 https://pplware.sapo.pt/internet/operacao-leak-desmantelada-maior-plataforma-de-phishing-em-acao-internacional/
+https://pplware.sapo.pt/internet/pj-mulher-apanhada-por-burlas-com-bilhetes-e-telemoveis/
 https://pplware.sapo.pt/internet/portugal-em-risco-como-o-e-mail-certificados-e-cdns-deixam-o-pais-vulneravel/
 https://pplware.sapo.pt/internet/psp-lanca-alerta-para-todos-por-causa-de-uma-burla/
 https://pplware.sapo.pt/internet/qualcomm-6g-promete-muito-mais-do-que-apenas-velocidades-explosivas/
@@ -98,6 +102,7 @@ https://pplware.sapo.pt/internet/quebramar-gera-e65-milhoes-com-estrategia-de-fi
 https://pplware.sapo.pt/internet/seguranca-social-datas-de-pagamento-das-prestacoes-sociais-e-pensoes-em-marco/
 https://pplware.sapo.pt/internet/seguranca/ha-uma-falha-grave-do-windows-a-venda-na-dark-web-por-220-mil-dolares/
 https://pplware.sapo.pt/internet/seguranca/hacker-escondeu-malware-em-jogos-na-steam-para-infetar-computadores/
+https://pplware.sapo.pt/internet/seguranca/imagens-de-pornografia-infantil-em-circulacao-vao-aumentar-a-partir-de-3-de-abril-porque/
 https://pplware.sapo.pt/internet/seguranca/iptv-a-conta-bancaria-pode-identificar-mais-rapido-que-o-endereco-ip/
 https://pplware.sapo.pt/internet/seguranca/meta-traz-seguranca-no-whatsapp-e-facebook-e-messenger-ia-e-biometria-contra-burlas/
 https://pplware.sapo.pt/internet/seguranca/russia-esta-a-atacar-o-signal-e-o-whatsapp-para-espiar-militares-e-jornalistas/
@@ -122,6 +127,7 @@ https://pplware.sapo.pt/motores/carros-eletricos-podem-nao-precisar-de-novas-red
 https://pplware.sapo.pt/motores/como-um-motor-de-combustao-a-hidrogenio-da-porsche-produz-o-seu-proprio-combustivel/
 https://pplware.sapo.pt/motores/eletricos-premium-da-zeekr-chegam-a-portugal-ainda-este-ano/
 https://pplware.sapo.pt/motores/enquanto-paises-europeus-fixam-tetos-maximos-governo-esta-atento-ao-preco-dos-combustiveis/
+https://pplware.sapo.pt/motores/futuros-mercedes-benz-eletricos-serao-mais-chineses-do-que-antes/
 https://pplware.sapo.pt/motores/gnr-apanha-homem-por-utilizar-tacografo-de-forma-fraudulenta/
 https://pplware.sapo.pt/motores/hyundai-anuncia-o-lancamento-de-dois-n-hyper-chargers-no-iconico-palco-nurburgring/
 https://pplware.sapo.pt/motores/na-china-powerbanks-moveis-carregam-carros-eletricos-em-qualquer-lugar-de-estacionamento/
@@ -149,12 +155,14 @@ https://totaltele.com/comcast-to-test-edge-ai-apps-using-nvidia-gpus/
 https://totaltele.com/could-war-with-iran-halt-americas-blossoming-data-center-boom/
 https://totaltele.com/ericssons-us-subsidiary-hit-by-cyberattack/
 https://totaltele.com/fcc-approves-charters-34-5b-acquisition-of-cox-key-details/
+https://totaltele.com/freedom-telecom-international-and-nokia-signs-strategic-cooperation-agreement-to-begin-joint-innovation-work/
 https://totaltele.com/huawei-launches-enhanced-ai-centric-network-solutions-for-all-intelligence-at-mwc-2026/
 https://totaltele.com/huawei-releases-115-industrial-intelligence-showcases-with-global-customers/
 https://totaltele.com/huawei-ushers-in-the-agentic-internet-era-at-mwc-2026/
 https://totaltele.com/huawei-will-release-the-agentic-core-solution-to-accelerate-the-commercial-use-of-agent-networks/
 https://totaltele.com/indosat-and-safaricom-partner-to-share-ai-learnings/
 https://totaltele.com/mobile-ai-is-here-why-networks-must-evolve-for-the-age-of-ai-agents/
+https://totaltele.com/o2-deploys-europes-first-pre-assembled-mobile-mast-in-kent/
 https://totaltele.com/openreachs-network-to-support-acoustic-sensing-for-leaky-water-pipes/
 https://totaltele.com/putting-data-in-action-transforming-digital-shadows-to-digital-twins/
 https://totaltele.com/shared-rural-network-upgrades-hit-50-mast-milestone-in-wales/
@@ -189,6 +197,7 @@ https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-79
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-80
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-81
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-82
+https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-83
 https://www.agcom.it/comunicazione/comunicati-stampa/osservatorio-sulle-comunicazioni-4-2025
 https://www.agcom.it/en/node/17
 https://www.agcom.it/en/node/23
@@ -292,6 +301,7 @@ https://www.comreg.ie/spectrum-intelligence-and-investigations-year-in-review-20
 https://www.comreg.ie/visit-us-at-the-50-plus-show-in-dublin-3/
 https://www.comreg.ie/vodafone-ireland-to-refund-over-e894000-in-roaming-charges/
 https://www.lightreading.com/5g/aws-has-quietly-torn-up-its-cloud-ran-silicon-plan
+https://www.lightreading.com/5g/bt-cto-says-ericsson-and-nokia-raised-game-to-replace-huawei
 https://www.lightreading.com/5g/dnb-and-telekom-malaysia-disagree-on-early-termination-of-5g-wholesale-contract
 https://www.lightreading.com/5g/ericsson-and-nokia-are-diverging-like-never-before-on-ai-ran
 https://www.lightreading.com/5g/eurobites-o2-offers-free-5g-sa-upgrades
@@ -299,6 +309,7 @@ https://www.lightreading.com/5g/eurobites-vodafone-offers-speed-boost-add-on-to-
 https://www.lightreading.com/5g/huawei-cloud-core-network-ushers-in-a-new-era-of-experience-monetization
 https://www.lightreading.com/5g/mwc-2026-will-be-rocked-by-telecom-derangement-syndrome
 https://www.lightreading.com/5g/nec-isn-t-giving-up-on-5g-ran-but-planning-a-massive-attack
+https://www.lightreading.com/5g/no-magic-bullet-will-solve-the-upper-c-band
 https://www.lightreading.com/5g/vmo2-reviews-ran-suppliers-in-5g-network-upgrade
 https://www.lightreading.com/5g/vodafone-and-tiami-inject-bat-like-sensing-into-5g
 https://www.lightreading.com/6g/t-mobile-tests-6g-with-ericsson-prototypes
@@ -306,6 +317,7 @@ https://www.lightreading.com/6g/us-war-dept-storms-mwc-with-ocudu-plan-to-blow-o
 https://www.lightreading.com/ai-machine-learning/china-s-telcos-join-the-openclaw-craze
 https://www.lightreading.com/ai-machine-learning/dt-puts-the-chat-into-chatbot-with-ai-for-voice-calls
 https://www.lightreading.com/ai-machine-learning/eurobites-telia-piggybacks-on-brookfield-for-sovereign-ai-push-in-sweden
+https://www.lightreading.com/ai-machine-learning/how-whale-cloud-powers-telecom-s-next-transformation-with-intelligent-productivity-
 https://www.lightreading.com/ai-machine-learning/intel-discusses-ai-5g-innovation-and-the-road-to-6g
 https://www.lightreading.com/ai-machine-learning/jio-targets-largest-token-generator-role-as-ai-reshapes-telecom-economics
 https://www.lightreading.com/ai-machine-learning/marvell-and-lumentum-to-demonstrate-optical-circuit-switching-for-ai-scale-up-infrastructure
@@ -340,6 +352,8 @@ https://www.lightreading.com/satellite/cc-s-carr-pitches-plan-to-apply-spectrum-
 https://www.lightreading.com/satellite/eurobites-deutsche-telekom-goes-with-starlink-for-satellite-fill-in
 https://www.lightreading.com/satellite/eurobites-vodafone-ast-spacemobile-jv-opens-for-business-in-europe
 https://www.lightreading.com/security/elisa-praises-placing-cybersecurity-at-heart-of-operations
+https://www.lightreading.com/security/orange-business-s-drone-detection-service-takes-off
 https://www.lightreading.com/smartphones-devices/meizu-exits-handset-business-as-sector-braces-for-brutal-2026
 https://www.lightreading.com/sustainability/greenwatch-dt-shows-decarbonization-is-still-on-agenda
+https://www.lightreading.com/wifi/plume-lands-deal-with-vietnam-s-fpt-telecom
 https://www.lightreading.com/wireless/deutsche-telekom-still-big-spender-on-huawei-despite-eu-ban-plan
