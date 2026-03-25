@@ -8,6 +8,7 @@ https://digital-strategy.ec.europa.eu/en/events/cef-digital-info-session-2026-ca
 https://digital-strategy.ec.europa.eu/en/funding/backbone-connectivity-digital-global-gateways-studies-0
 https://digital-strategy.ec.europa.eu/en/funding/equipment-smart-european-cable-systems-works
 https://digital-strategy.ec.europa.eu/en/news/5g-use-cases-future-multiannual-financial-framework
+https://digital-strategy.ec.europa.eu/en/news/code-conduct-disinformation-signatories-publish-their-latest-reports-codes-transparency-0
 https://digital-strategy.ec.europa.eu/en/news/commission-and-edpb-publish-contributions-consultation-draft-joint-guidelines-interplay-between-dma
 https://digital-strategy.ec.europa.eu/en/news/commission-announces-eu75-million-euro-3c-project-build-federated-telco-edge-cloud-infrastructure
 https://digital-strategy.ec.europa.eu/en/news/commission-holds-first-meeting-special-panel-child-safety-online
@@ -46,6 +47,7 @@ https://pplware.sapo.pt/apple/apple-lanca-ios-26-4-rc-para-iphone-com-varias-nov
 https://pplware.sapo.pt/apple/apple-music-passa-a-identificar-conteudos-criados-com-inteligencia-artificial/
 https://pplware.sapo.pt/apple/apple-voltou-a-ser-multada-no-brasil-por-vender-o-iphone-sem-carregador/
 https://pplware.sapo.pt/apple/ios-26-4-beta-4-ja-chegou-e-traz-novidades-novos-emojis-e-mudancas-no-design/
+https://pplware.sapo.pt/apple/ios-26-4-ja-chegou-novos-emojis-e-mais-de-uma-dezena-de-melhorias-no-iphone/
 https://pplware.sapo.pt/apple/um-mac-mais-barato-sim-chegou-o-novo-macbook-neo-por-699e/
 https://pplware.sapo.pt/ciencia/menor-codigo-qr-do-mundo-e-tao-pequeno-que-e-invisivel-ate-a-microscopios/
 https://pplware.sapo.pt/eventos/parallel-society-lisbon-2026/
@@ -101,6 +103,8 @@ https://pplware.sapo.pt/internet/6g-a-nova-arma-geopolitica-da-china-que-vai-mui
 https://pplware.sapo.pt/internet/antenas-de-telecomunicacoes-no-condominio-o-que-deve-saber/
 https://pplware.sapo.pt/internet/ciberseguranca-red-team-e-blue-team-quais-as-diferencas/
 https://pplware.sapo.pt/internet/da-descoberta-ao-desastre-o-ciclo-de-vida-de-uma-vulnerabilidade/
+https://pplware.sapo.pt/internet/eset-reforca-oferta-empresarial-com-ia-e-protecao-de-maquinas-virtuais-na-cloud/
+https://pplware.sapo.pt/internet/eua-banem-routers-produzidos-fora-do-pais-por-questoes-de-seguranca/
 https://pplware.sapo.pt/internet/fisco-lanca-alerta-para-todos-por-causa-de-mensagens-fraudulentas/
 https://pplware.sapo.pt/internet/gmail-aumenta-tamanho-das-mensagens-enviadas-e-recebidas-mas-nao-e-para-todos/
 https://pplware.sapo.pt/internet/iptv-ilegal-em-portugal-mercado-de-milhoes-que-ameaca-seguranca-dos-utilizadores/
@@ -166,9 +170,11 @@ https://pplware.sapo.pt/motores/vision-gran-turismo-o-primeiro-hiperdesportivo-d
 https://pplware.sapo.pt/multimedia-2/musica/dica-como-identificar-uma-musica-apenas-a-trautear-com-a-google/
 https://pplware.sapo.pt/multimedia-2/musica/pplware-classics-742/
 https://pplware.sapo.pt/smartphones-tablets/android/android-auto-bloqueia-navegacao-do-google-maps-e-do-waze-no-hud/
+https://pplware.sapo.pt/smartphones-tablets/android/android-auto-novo-bug-impede-utilizacao-plena-desta-solucao-da-google/
 https://pplware.sapo.pt/smartphones-tablets/android/google-da-ao-android-funcionalidade-que-todos-pediam-nas-sms-e-mensagens/
 https://pplware.sapo.pt/smartphones-tablets/android/oppo-find-x9-ultra-novo-colosso-da-fotografia-movel-chega-a-europa-em-2026/
 https://pplware.sapo.pt/smartphones-tablets/android/usar-o-whatsapp-sem-conta-nova-funcao-guest-chats-muda-as-regras-do-jogo/
+https://pplware.sapo.pt/smartphones-tablets/android/whatsapp-vai-lancar-as-mensagens-que-desaparecem-e-dar-aos-utilizadores-mais-privacidade/
 https://pplware.sapo.pt/smartphones-tablets/como-saber-se-uma-chamada-telefonica-e-ia-ou-nao-a-eset-explica/
 https://pplware.sapo.pt/smartphones-tablets/psp-e-o-primeiro-guardiao-da-nova-app-portuguesa-para-combater-burlas/
 https://pplware.sapo.pt/smartphones-tablets/tcl-note-a1-nxtpaper-escrever-como-no-papel-mas-em-formato-digital/
@@ -182,6 +188,7 @@ https://pplware.sapo.pt/zzpublicidade/estas-chaves-digitais-podem-salvar-o-seu-p
 https://totaltele.com/ai-and-the-digital-divide-technology-cannot-be-allowed-to-outpace-inclusion/
 https://totaltele.com/att-to-invest-250bn-to-expand-and-enhance-networks/
 https://totaltele.com/building-trust-at-scale-why-digital-sovereignty-needs-a-rethink/
+https://totaltele.com/colt-develops-agentic-ai-engine-with-microsoft-ai-cutting-enterprise-quote-time-from-days-to-minutes/
 https://totaltele.com/comcast-to-test-edge-ai-apps-using-nvidia-gpus/
 https://totaltele.com/could-war-with-iran-halt-americas-blossoming-data-center-boom/
 https://totaltele.com/ericssons-us-subsidiary-hit-by-cyberattack/
@@ -193,6 +200,7 @@ https://totaltele.com/huawei-unveils-ai-native-framework-and-new-generation-solu
 https://totaltele.com/huawei-ushers-in-the-agentic-internet-era-at-mwc-2026/
 https://totaltele.com/huawei-will-release-the-agentic-core-solution-to-accelerate-the-commercial-use-of-agent-networks/
 https://totaltele.com/indosat-and-safaricom-partner-to-share-ai-learnings/
+https://totaltele.com/make-sure-all-tools-are-present-always/
 https://totaltele.com/mobile-ai-is-here-why-networks-must-evolve-for-the-age-of-ai-agents/
 https://totaltele.com/o2-deploys-europes-first-pre-assembled-mobile-mast-in-kent/
 https://totaltele.com/openreachs-network-to-support-acoustic-sensing-for-leaky-water-pipes/
@@ -291,8 +299,10 @@ https://www.anacom.pt/render.jsp?contentId=1829237
 https://www.anacom.pt/render.jsp?contentId=1829499
 https://www.anacom.pt/render.jsp?contentId=1829553
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/audiovisuel-et-tnt-200326.html
+https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/fibre-optique-240326.html
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/marche-entreprises-230326.html
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/reseaux-en-fibre-optique-190226.html
+https://www.arcep.fr/actualites/les-prises-de-parole/detail/n/discours-ldlr-guide-numerique-entreprises-230326.html
 https://www.bundesnetzagentur.de/DE/Allgemeines/Presse/Pressemitteilungen/start.html
 https://www.bundesnetzagentur.de/EN/Areas/Digitalisation/Data/DataEconomy/start.html
 https://www.bundesnetzagentur.de/EN/Areas/Digitalisation/Data/GaiaX/start.html
@@ -314,6 +324,7 @@ https://www.bundesnetzagentur.de/EN/General/Press/PressReleases/start.html#Inhal
 https://www.bundesnetzagentur.de/EN/General/Press/PressReleases/start.html#Suche
 https://www.bundesnetzagentur.de/EN/General/contact/start.html
 https://www.bundesnetzagentur.de/SharedDocs/A_Z_Glossar_DataAct_ENG/start.html
+https://www.cnmc.es/node/419331
 https://www.cnmc.es/prensa/datos-diciembre-telecos-20260219
 https://www.cnmc.es/prensa/geografico-banda-ancha-fija-20260305
 https://www.cnmc.es/prensa/normativa-telecomunicaciones-emergencia-20260312
@@ -345,6 +356,7 @@ https://www.comreg.ie/irish-text-relay-service-usage-report-published-for-januar
 https://www.comreg.ie/spectrum-intelligence-and-investigations-year-in-review-2024-2025/
 https://www.comreg.ie/visit-us-at-the-50-plus-show-in-dublin-3/
 https://www.comreg.ie/vodafone-ireland-to-refund-over-e894000-in-roaming-charges/
+https://www.comreg.ie/your-provider-should-send-you-an-end-of-contract-notice-and-best-tariff-advice/
 https://www.lightreading.com/2g-3g-4g/japanese-operators-join-forces-to-launch-emergency-roaming
 https://www.lightreading.com/5g/5g-core-spending-rose-83-in-q4-2025-as-csps-accelerate-5g-sa-deployments-omdia
 https://www.lightreading.com/5g/aws-has-quietly-torn-up-its-cloud-ran-silicon-plan
@@ -358,6 +370,7 @@ https://www.lightreading.com/5g/huawei-cloud-core-network-ushers-in-a-new-era-of
 https://www.lightreading.com/5g/mwc-2026-will-be-rocked-by-telecom-derangement-syndrome
 https://www.lightreading.com/5g/nec-isn-t-giving-up-on-5g-ran-but-planning-a-massive-attack
 https://www.lightreading.com/5g/no-magic-bullet-will-solve-the-upper-c-band
+https://www.lightreading.com/5g/samsung-eyes-death-of-purpose-built-5g-but-has-no-ai-ran-fears
 https://www.lightreading.com/5g/vmo2-reviews-ran-suppliers-in-5g-network-upgrade
 https://www.lightreading.com/5g/vodafone-and-tiami-inject-bat-like-sensing-into-5g
 https://www.lightreading.com/6g/t-mobile-tests-6g-with-ericsson-prototypes
@@ -386,6 +399,7 @@ https://www.lightreading.com/cable-technology/fcc-approves-charter-cox-merger
 https://www.lightreading.com/cable-technology/fcc-shoots-down-opposition-in-approving-charter-cox-merger
 https://www.lightreading.com/cloud/china-s-cloud-players-hike-prices-citing-ai-demand
 https://www.lightreading.com/data-centers/australia-tells-data-centers-to-pay-for-their-own-energy
+https://www.lightreading.com/data-centers/clar-enters-japan-s-data-center-market-with-strategic-osaka-investment
 https://www.lightreading.com/data-centers/eurobites-telef-nica-adopts-digital-twin-tech-for-more-efficient-data-centers
 https://www.lightreading.com/data-centers/fidium-flexential-expand-data-center-partnership
 https://www.lightreading.com/data-centers/firstlight-expands-data-center-in-bedford-new-hampshire
@@ -410,6 +424,7 @@ https://www.lightreading.com/satellite/cc-s-carr-pitches-plan-to-apply-spectrum-
 https://www.lightreading.com/satellite/eurobites-deutsche-telekom-goes-with-starlink-for-satellite-fill-in
 https://www.lightreading.com/satellite/eurobites-ofcom-frees-up-spectrum-for-space-based-connectivity
 https://www.lightreading.com/satellite/eurobites-vodafone-ast-spacemobile-jv-opens-for-business-in-europe
+https://www.lightreading.com/security/at-t-ericsson-call-for-5g-network-security-rethink
 https://www.lightreading.com/security/elisa-praises-placing-cybersecurity-at-heart-of-operations
 https://www.lightreading.com/security/orange-business-s-drone-detection-service-takes-off
 https://www.lightreading.com/smartphones-devices/meizu-exits-handset-business-as-sector-braces-for-brutal-2026
