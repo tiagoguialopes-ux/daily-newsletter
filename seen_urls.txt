@@ -1,6 +1,6 @@
 https://digital-strategy.ec.europa.eu/en/consultations/call-evidence-advertising-repositories|||2026-11-20
 https://digital-strategy.ec.europa.eu/en/consultations/commission-collects-feedback-define-eus-position-upcoming-world-radiocommunication-conference-2027|||2026-11-24
-https://digital-strategy.ec.europa.eu/en/consultations/commission-collects-feedback-deploying-cellular-based-dual-use-drone-detection-capacity|||2026-11-19
+https://digital-strategy.ec.europa.eu/en/consultations/commission-collects-feedback-deploying-cellular-based-dual-use-drone-detection-capacity|||2026-11-27
 https://digital-strategy.ec.europa.eu/en/consultations/european-commission-survey-ai-healthcare-and-pharmaceuticals|||2026-11-24
 https://digital-strategy.ec.europa.eu/en/consultations/future-euroqci-activities-be-supported-european-commission|||2026-11-24
 https://digital-strategy.ec.europa.eu/en/consultations/targeted-consultation-draft-guidelines-trusted-flaggers-under-digital-services-act-dsa|||2026-11-24
@@ -8,14 +8,13 @@ https://digital-strategy.ec.europa.eu/en/consultations/targeted-consultation-dra
 https://digital-strategy.ec.europa.eu/en/consultations/targeted-consultation-safeguarding-eus-data-sovereignty|||2026-11-24
 https://digital-strategy.ec.europa.eu/en/news/ai-act-advisory-forum-holds-its-second-meeting|||2026-11-23
 https://digital-strategy.ec.europa.eu/en/news/ai-advisory-forum-holds-it-second-meeting|||2026-11-20
+https://digital-strategy.ec.europa.eu/en/news/call-participants-workshop-embedded-evaluations-gpai-models-systemic-risk|||2026-11-27
 https://digital-strategy.ec.europa.eu/en/news/commission-funds-four-news-media-projects-eur166-million-foster-pan-european-reporting|||2026-11-24
 https://digital-strategy.ec.europa.eu/en/news/commission-hosts-apply-ai-summit-boost-europes-ai-innovation-and-uptake|||2026-11-25
 https://digital-strategy.ec.europa.eu/en/news/commission-preliminarily-finds-temu-breach-digital-services-act-failure-tackle-sale-illegal|||2026-11-25
 https://digital-strategy.ec.europa.eu/en/news/commission-proposes-quantum-act-and-new-sovereign-tech-equity-fund-strengthen-europes-industrial|||2026-11-25
 https://digital-strategy.ec.europa.eu/en/news/eu-and-kenya-hold-successful-digital-dialogue|||2026-11-24
-https://digital-strategy.ec.europa.eu/en/news/european-citizens-panel-deliver-recommendations-strengthening-eu-democracy|||2026-11-19
 https://digital-strategy.ec.europa.eu/en/news/european-digital-infrastructure-consortium-launches-today-strengthen-digital-sovereignty-education|||2026-11-20
-https://digital-strategy.ec.europa.eu/en/news/first-european-standard-published-support-cyber-resilience-act|||2026-11-19
 https://digital-strategy.ec.europa.eu/en/news/member-states-join-forces-develop-sovereign-digital-infrastructure-education|||2026-11-20
 https://digital-strategy.ec.europa.eu/en/news/press-statement-european-board-digital-services-following-its-21st-meeting|||2026-11-20
 https://digital-strategy.ec.europa.eu/en/news/results-2026-call-proposals-pan-european-reporting|||2026-11-24
@@ -32,9 +31,9 @@ https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-87|||2026
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-88|||2026-11-24
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-89|||2026-11-25
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-90|||2026-11-23
-https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-91|||2026-11-19
+https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-91|||2026-11-27
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-92|||2026-11-23
-https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-93|||2026-11-19
+https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-93|||2026-11-27
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-94|||2026-11-26
 https://www.agcom.it/comunicazione/comunicati-stampa/comunicato-stampa-95|||2026-11-26
 https://www.agcom.it/comunicazione/comunicati-stampa/informazione-tv-poche-voci-e-pochi-temi-al-centro-del-dibattito|||2026-11-20
@@ -46,8 +45,8 @@ https://www.agcom.it/comunicazione/comunicati-stampa/referendum-2026-la-televisi
 https://www.agcom.it/comunicazione/comunicati-stampa/sic-2024-il-sistema-integrato-delle-comunicazioni-italia-vale-218|||2026-11-25
 https://www.agcom.it/en/node/23|||2026-11-23
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/deploiement-de-la-fibre-optique-a-mayotte-161126.html|||2026-11-24
-https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/environnement-101126.html|||2026-11-19
-https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/fibre-optique-151026.html|||2026-11-19
+https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/environnement-101126.html|||2026-11-27
+https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/extinction-des-reseaux-mobiles-2g-et-3g-271126.html|||2026-11-27
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/mutualisation-de-frequences-131026.html|||2026-11-25
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/qualite-de-service-mobile-antilles-guyane-2026-221026.html|||2026-11-26
 https://www.arcep.fr/actualites/actualites-et-communiques/detail/n/qualite-des-services-mobiles-en-france-hexagonale-171126.html|||2026-11-26
@@ -82,8 +81,8 @@ https://www.cnmc.es/prensa/ipn-servicio-universal-20261105|||2026-11-23
 https://www.cnmc.es/prensa/operadores-principales-telefonia-movil-fija-20261028|||2026-11-23
 https://www.cnmc.es/prensa/panel-hogares-usos-internet-servicios-ott-20261030|||2026-11-25
 https://www.ilr.lu/cadre-legal/loi-du-28-juin-2023-modifiant-la-loi-modifiee-du-6-juin-2019/|||2026-11-24
-https://www.ilr.lu/publications/leger-recul-du-transport-voyageurs-et-hausse-du-chiffre-daffaires-des-entreprises-ferroviaires/|||2026-11-19
 https://www.lightreading.com/5g/ee-and-ericsson-enhance-london-5g-by-putting-ai-in-the-ran|||2026-11-26
+https://www.lightreading.com/5g/south-korea-wraps-up-nationwide-5g-sa-deployment-eyes-tiered-service-plans|||2026-11-27
 https://www.lightreading.com/5g/t-mobile-goes-all-in-to-connect-las-vegas-grand-prix|||2026-11-25
 https://www.lightreading.com/5g/vmo2-aims-to-cut-5g-costs-with-a-wind-tunnels-help|||2026-11-24
 https://www.lightreading.com/broadband/at-t-calls-hfc-old-fashioned-as-legal-slugfest-with-spectrum-continues|||2026-11-24
@@ -96,3 +95,4 @@ https://www.lightreading.com/satellite/most-new-starlink-subs-can-score-better-d
 https://www.lightreading.com/satellite/telecom-veteran-bets-airships-in-stratosphere-can-beat-starlink-in-space|||2026-11-20
 https://www.lightreading.com/security/ericsson-provides-5g-for-spanish-military-exercise|||2026-11-24
 https://www.lightreading.com/security/eurobites-bt-taps-anthropic-and-friends-to-offer-cyber-training-to-smes|||2026-11-26
+https://www.lightreading.com/wireless/eurobites-elisa-drei-claim-roaming-breakthrough-with-5g-sa|||2026-11-27
